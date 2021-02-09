@@ -3,9 +3,9 @@ const gameContainer = document.querySelector(".game--container")
 
 let currentPlayer = Math.random() > 0.5 ? 'X' : 'O';
 let gameState = ['', '', '', '', '', '', '', '', ''];
-let gameState2 = [['', '', ''],
-                  ['', '', ''],
-                  ['', '', '']];
+// let gameState2 = [['', '', ''],
+//                   ['', '', ''],
+//                   ['', '', '']];
 let gameActive = true;
 let playerX = []
 let playerO = []
@@ -47,28 +47,73 @@ function handleCellClick(clickedCellEvent) {
   handleCellPlayed(clickedCell, clickedCellIndex);
   handlePlayerChange();
   handleWinner()
-  // console.log(gameState2)
+  // console.log(gameState)
 }
 
 function handleWinner() {
 
-  gameState.forEach( (cell, index, array) => {
-    if (index < 3) {
-      cell === 'O' && (!playerO.includes(index) && playerO.push(index))
-      cell === 'X' && (!playerX.includes(index) && playerX.push(index))
-    } else if (index > 2 && index < 6) {
-      cell === 'O' && (!playerO.includes(index - 3) && playerO.push(index - 3))
-      cell === 'X' && (!playerX.includes(index - 3) && playerX.push(index - 3))
-    } else {
-      cell === 'O' && (!playerO.includes(index - 6) && playerO.push(index - 6))
-      cell === 'X' && (!playerX.includes(index - 6) && playerX.push(index - 6))
-    }
-    // if (cell === 'O') playerO.push(index)
-    // if (cell === 'X') playerX.push(index)
-  })
+  // gameStateObjects = gameState.map((item, index, array) => {
+  //   if (index < 3) {
+  //     return {[item]: index}
+  //   } else if (index > 2 && index < 6) {
+  //     return {[item]: index - 3}
+  //   } else {
+  //     return {[item]: index - 6}
+  //   }
+  // });
+
+  // console.log(gameStateObjects);
+
+  // let playerO = {0: 0, 1: 0, 2: 0}
+  // let playerX = {0: 0, 1: 0, 2: 0}
+
+  // gameStateObjects.forEach( item => {
+  //   if (item["O"] !== undefined) {
+  //     item["O"] === 0 && playerO['0']++
+  //     item["O"] === 1 && playerO['1']++
+  //     item["O"] === 2 && playerO['2']++
+  //   }
+  //   if (item["X"] !== undefined) {
+  //     item["X"] === 0 && playerX['0']++
+  //     item["X"] === 1 && playerX['1']++
+  //     item["X"] === 2 && playerX['2']++
+  //   }
+  // })
+
+  // for (let index in playerO) {
+  //   if (playerO[index] === 3) {
+  //     cellElements.forEach( element => element.removeEventListener("click", handleCellClick))
+  //     statusDisplay.innerHTML = `Player 'O' Won The Game!`
+  //     statusDisplay.style.color = "green"
+  //   }
+  // }
+
+  // for (let index in playerX) {
+  //   if (playerX[index] === 3) {
+  //     cellElements.forEach( element => element.removeEventListener("click", handleCellClick))
+  //     statusDisplay.innerHTML = `Player 'X' Won The Game!`
+  //     statusDisplay.style.color = "red"
+  //   }
+  // }
   
-  console.log(playerO)
-  console.log(playerX)
+  // console.log(playerO)
+  // console.log(playerX)
+
+  // gameState.forEach( (cell, index, array) => {
+  //   if (index < 3) {
+  //     cell === 'O' && (!playerO.includes(index) && playerO.push(index))
+  //     cell === 'X' && (!playerX.includes(index) && playerX.push(index))
+  //   } else if (index > 2 && index < 6) {
+  //     cell === 'O' && (!playerO.includes(index - 3) && playerO.push(index - 3))
+  //     cell === 'X' && (!playerX.includes(index - 3) && playerX.push(index - 3))
+  //   } else {
+  //     cell === 'O' && (!playerO.includes(index - 6) && playerO.push(index - 6))
+  //     cell === 'X' && (!playerX.includes(index - 6) && playerX.push(index - 6))
+  //   }
+  //   if (cell === 'O') playerO.push(index)
+  //   if (cell === 'X') playerX.push(index)
+  // })
+  
   // let index0CountO = 0
   // let index1CountO = 0
   // let index2CountO = 0
@@ -103,6 +148,96 @@ function handleWinner() {
   //     } 
   //   })
   // }
+  playerO = []
+  playerX = []
+
+  let table = {
+    row1: [],
+    row2: [],
+    row3: [],
+
+    column1: [],
+    column2: [],
+    column3: [],
+
+    cross1: [],
+    cross2: []
+  }
+
+  // let row1 = [0, 1, 2]
+  // let row2 = [3, 4, 5]
+  // let row3 = [6, 7, 8]
+
+  // let column1 = [0, 3, 6]
+  // let column2 = [1, 4, 7]
+  // let column3 = [2, 5, 8]
+
+  // let cross1 = [0, 4, 8]
+  // let cross2 = [2, 4, 6]
+
+  gameState.forEach( (item, index) => {
+    switch (index) {
+      case 0:
+        table.row1.push(item)
+        table.column1.push(item)
+        table.cross1.push(item)
+        break;
+      case 1:
+        table.row1.push(item)
+        table.column2.push(item)
+        break;
+      case 2:
+        table.row1.push(item)
+        table.column3.push(item)
+        table.cross2.push(item)
+        break;
+      case 3:
+        table.row2.push(item)
+        table.column1.push(item)
+        break;
+      case 4:
+        table.row2.push(item)
+        table.column2.push(item)
+        table.cross1.push(item)
+        table.cross2.push(item)
+        break;
+      case 5:
+        table.row2.push(item)
+        table.column3.push(item)
+        break;
+      case 6:
+        table.row3.push(item)
+        table.column1.push(item)
+        table.cross2.push(item)
+        break;
+      case 7:
+        table.row3.push(item)
+        table.column2.push(item)
+        break;
+      case 8:
+        table.row3.push(item)
+        table.column3.push(item)
+        table.cross1.push(item)
+        break;
+      default:
+        break
+    }
+  })
+
+  for (let val in table) {
+    if ((JSON.stringify(table[val]) === `["O","O","O"]`)) {
+      cellElements.forEach( element => element.removeEventListener("click", handleCellClick))
+      statusDisplay.innerHTML = `Player 'O' Won The Game!`
+      statusDisplay.style.color = "green"
+    }
+    if (JSON.stringify(table[val]) === `["X","X","X"]`) {
+      cellElements.forEach( element => element.removeEventListener("click", handleCellClick))
+      statusDisplay.innerHTML = `Player 'X' Won The Game!`
+      statusDisplay.style.color = "red"
+    }
+  }
+
+  console.log(table)
 
   // let selectedSubtractionsO = []
   // for (let i = 0; i < playerO.length; i++) {
@@ -138,15 +273,15 @@ function handleWinner() {
 function handleRestartGame() {
   currentPlayer = Math.random() > 0.5 ? 'X' : 'O';
   gameState = ['', '', '', '', '', '', '', '', ''];
-  gameState2 = [['', '', ''],
-                ['', '', ''],
-                ['', '', '']];
+  // gameState2 = [['', '', ''],
+  //               ['', '', ''],
+  //               ['', '', '']];
   statusDisplay.innerHTML = currentPlayerTurn();
   statusDisplay.style.color = "black"
   cellElements.forEach(cell => cell.addEventListener('click', handleCellClick));
   document.querySelectorAll('.cell').forEach(cell => (cell.innerHTML = ''));
-  playerO = []
-  playerX = []
+  // playerO = []
+  // playerX = []
 }
 
 const cellElements = document.querySelectorAll('.cell');
