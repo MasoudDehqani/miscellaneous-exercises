@@ -125,7 +125,6 @@ class ElementBuilder {
   }
 }
 
-
 class App {
 
   private static styles = {
