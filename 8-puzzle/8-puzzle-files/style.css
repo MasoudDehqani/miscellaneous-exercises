@@ -10,7 +10,8 @@ body {
 }
 
 .grid-wrapper {
-
+    font-size: 1.2rem;
+    user-select: none;
 }
 
 .row {
