@@ -67,3 +67,14 @@ function cellsClickHandle(event) {
 cells.forEach(element => {
   element.addEventListener('click', cellsClickHandle);
 });
+
+const resetButton = document.querySelectorAll(".btn")[0]
+
+resetButton.addEventListener("click", (e) => {
+  tableState = []
+  separatedTableState = []
+  arrayTableInitialStateHandle()
+  cellsStateMatch()
+  setTwoArrays()
+})
+
