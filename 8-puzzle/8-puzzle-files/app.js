@@ -40,16 +40,6 @@ setTwoArrays()
 
 
 function cellsClickHandle(event) {
-  let won = true;
-  for (let i = 0; i < 9; i++) {
-    if (tableState[i] !== solvedPuzzle[i]) {
-      won = false
-    }
-  };
-  if (won) {
-    document.querySelector("#game_status").innerHTML = `You Won after ${moves} moves`;
-    return
-  };
   separatedTableState.forEach( arr => {
     if (arr.includes('') && arr.includes(+event.target.innerHTML) && Math.abs(arr.indexOf(+event.target.innerHTML) - arr.indexOf('')) === 1) {
       let eventIndex = tableState.indexOf(+event.target.innerHTML)
@@ -60,6 +50,18 @@ function cellsClickHandle(event) {
       setTwoArrays()
       moves++
       document.querySelector("#moves").textContent = moves
+      let won = true;
+      for (let i = 0; i < 9; i++) {
+        if (tableState[i] !== solvedPuzzle[i]) {
+          won = false
+        }
+      };
+      if (won) {
+        document.querySelector("#game_status").innerHTML = `You Won after ${moves} moves`;
+        cells.forEach(element => {
+          element.removeEventListener('click', cellsClickHandle);
+        });
+      };
     };
   })
 }
@@ -76,5 +78,8 @@ resetButton.addEventListener("click", (e) => {
   arrayTableInitialStateHandle()
   cellsStateMatch()
   setTwoArrays()
+  cells.forEach(element => {
+    element.addEventListener('click', cellsClickHandle);
+  });
 })
 
